@@ -1,4 +1,4 @@
-package com.nikola.kotlinarchitecturecomponents.Room
+package com.nikola.kotlinarchitecturecomponents.room
 
 import android.content.Context
 import androidx.room.Database

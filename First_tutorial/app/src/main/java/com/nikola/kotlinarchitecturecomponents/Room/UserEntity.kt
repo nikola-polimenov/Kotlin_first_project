@@ -1,4 +1,4 @@
-package com.nikola.kotlinarchitecturecomponents.Room
+package com.nikola.kotlinarchitecturecomponents.room
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
