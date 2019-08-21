@@ -18,7 +18,7 @@ private lateinit var authViewModel: AuthenticationViewModel
         authViewModel = ViewModelProviders.of(this).get(AuthenticationViewModel::class.java)
 
         register.setOnClickListener {
-            authViewModel.insertUser(UserEntity(id = 0, username = input_username.text.toString(),password = input_password.text.toString()))
+            authViewModel.insertUser(UserEntity(username = input_username.text.toString(),password = input_password.text.toString()))
             Toast.makeText(this, "Registered successfully!", Toast.LENGTH_SHORT).show()
         }
 
