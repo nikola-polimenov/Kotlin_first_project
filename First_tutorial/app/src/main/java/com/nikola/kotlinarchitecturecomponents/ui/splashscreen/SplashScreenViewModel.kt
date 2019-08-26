@@ -7,7 +7,7 @@ import com.nikola.kotlinarchitecturecomponents.room.UserRepository
 
 
 class SplashScreenViewModel(application: Application):AndroidViewModel(application) {
-    private val userRepository:UserRepository = UserRepository(application)
+    //private val userRepository:UserRepository = UserRepository(application)
 
 
 }

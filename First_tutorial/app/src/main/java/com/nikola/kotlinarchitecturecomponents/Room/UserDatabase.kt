@@ -17,7 +17,9 @@ abstract class UserDatabase :RoomDatabase() {
             if (database == null) {
                 synchronized(UserDatabase::class.java) {
                     if (database == null) {
-                        database = Room.databaseBuilder(context.applicationContext, UserDatabase::class.java, "user database").build()
+                        database = Room.databaseBuilder(context.applicationContext, UserDatabase::class.java, "user database")
+                            .fallbackToDestructiveMigration()
+                            .build()
                     }
                 }
             }

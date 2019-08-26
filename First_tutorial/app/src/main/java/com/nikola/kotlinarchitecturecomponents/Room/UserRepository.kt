@@ -11,21 +11,25 @@ class UserRepository(application: Application) {
         userDao = db?.userDAO()
     }
 
-    fun insertUser (user:UserEntity) {
+    suspend fun insertUser(user:UserEntity) {
         userDao?.insertUser(user)
     }
 
-    fun deleteUser (user: UserEntity) {
+    suspend fun deleteUser(user: UserEntity) {
         userDao?.deleteUser(user)
     }
 
-    fun updateUser (user: UserEntity) {
+    suspend fun updateUser(user: UserEntity) {
         userDao?.updateUser(user)
 
     }
 
-    fun findUserByName (username:String): LiveData<List<UserEntity>>? {
+    suspend fun findUserByName(username:String): LiveData<List<UserEntity>>? {
         return userDao?.findByUsername(username)
+    }
+
+    suspend fun getAllUsers(): LiveData<List<UserEntity>>? {
+        return userDao?.getAllUsers()
     }
 
 }

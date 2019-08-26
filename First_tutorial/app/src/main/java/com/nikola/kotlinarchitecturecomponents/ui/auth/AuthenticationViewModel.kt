@@ -3,17 +3,17 @@ package com.nikola.kotlinarchitecturecomponents.ui.auth
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import com.nikola.kotlinarchitecturecomponents.room.UserEntity
 import com.nikola.kotlinarchitecturecomponents.room.UserRepository
-import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.*
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.Dispatchers.Main
-import kotlinx.coroutines.async
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 class AuthenticationViewModel(application: Application):AndroidViewModel(application) {
     private val userRepository: UserRepository = UserRepository(application)
+    val foundUser = MutableLiveData<List<UserEntity>>()
+    val users = MutableLiveData<List<UserEntity>>()
 
     fun insertUser(user:UserEntity) {
         CoroutineScope(IO).launch {
@@ -33,13 +33,30 @@ class AuthenticationViewModel(application: Application):AndroidViewModel(applica
         }
     }
 
-    //This is the method i really need help with, i don't have a clue how to get the LiveData out of the Coroutine
-    /*
-    fun findUserByUsername(username:String):LiveData<List<UserEntity>> {
-            CoroutineScope(IO).launch {
-                userRepository.findUserByName(username)
-            }
+    fun findAllUsers() {
+        CoroutineScope(Main).launch {
+            users.value = getAllUsersFromDatabase()?.value
         }
-    */
+    }
+
+    private suspend fun getAllUsersFromDatabase(): LiveData<List<UserEntity>>? {
+        return withContext(IO) {
+            return@withContext userRepository.getAllUsers()
+        }
+    }
+
+    fun findUserByUsername(username:String) {
+            CoroutineScope(Main).launch {
+                foundUser.value = getUserFromDatabase(username)?.value
+            }
+
+    }
+
+    private suspend fun getUserFromDatabase(username: String): LiveData<List<UserEntity>>? {
+        return withContext(IO) {
+            return@withContext userRepository.findUserByName(username)
+        }
+    }
+
 
 }

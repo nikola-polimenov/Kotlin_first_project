@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">Kotlin Architecture Components</string>
+    <string name="welcome_to_quick_chat">Welcome to QuickChat!</string>
+    <string name="username">Username:</string>
+    <string name="password">Password:</string>
+    <string name="login">Login</string>
+    <string name="register">Register</string>
+    <string name="logo">QuickChat</string>
 </resources>
