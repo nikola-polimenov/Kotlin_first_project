@@ -2,60 +2,55 @@ package com.nikola.kotlinarchitecturecomponents.ui.auth
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.nikola.kotlinarchitecturecomponents.room.UserEntity
-import com.nikola.kotlinarchitecturecomponents.room.UserRepository
+import com.nikola.kotlinarchitecturecomponents.room.RoomRepository
 import kotlinx.coroutines.*
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.Dispatchers.Main
 
-class AuthenticationViewModel(application: Application):AndroidViewModel(application) {
-    private val userRepository: UserRepository = UserRepository(application)
+class AuthenticationViewModel(application: Application) : AndroidViewModel(application) {
+    private val roomRepository: RoomRepository = RoomRepository(application)
     val foundUser = MutableLiveData<List<UserEntity>>()
     val users = MutableLiveData<List<UserEntity>>()
 
-    fun insertUser(user:UserEntity) {
+    fun insertUser(user: UserEntity) {
         CoroutineScope(IO).launch {
-            userRepository.insertUser(user)
+            roomRepository.insertUser(user)
         }
     }
 
     fun deleteUser(user: UserEntity) {
         CoroutineScope(IO).launch {
-            userRepository.deleteUser(user)
+            roomRepository.deleteUser(user)
         }
     }
 
     fun updateUser(user: UserEntity) {
         CoroutineScope(IO).launch {
-            userRepository.updateUser(user)
+            roomRepository.updateUser(user)
         }
     }
 
     fun findAllUsers() {
-        CoroutineScope(Main).launch {
-            users.value = getAllUsersFromDatabase()?.value
-        }
-    }
+        CoroutineScope(IO).launch {
+            val result = roomRepository.getAllUsers()
 
-    private suspend fun getAllUsersFromDatabase(): LiveData<List<UserEntity>>? {
-        return withContext(IO) {
-            return@withContext userRepository.getAllUsers()
-        }
-    }
-
-    fun findUserByUsername(username:String) {
-            CoroutineScope(Main).launch {
-                foundUser.value = getUserFromDatabase(username)?.value
+            withContext(Main) {
+                users.value = result
             }
-
+        }
     }
 
-    private suspend fun getUserFromDatabase(username: String): LiveData<List<UserEntity>>? {
-        return withContext(IO) {
-            return@withContext userRepository.findUserByName(username)
+    fun findUserByUsername(username: String) {
+        CoroutineScope(IO).launch {
+            val result = roomRepository.findUserByName(username)
+
+            withContext(Main) {
+                foundUser.value = result
+            }
         }
+
     }
 
 

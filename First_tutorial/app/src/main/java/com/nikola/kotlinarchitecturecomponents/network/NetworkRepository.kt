@@ -1,0 +1,3 @@
+package com.nikola.kotlinarchitecturecomponents.network
+
+class NetworkRepository

@@ -6,4 +6,6 @@
     <string name="login">Login</string>
     <string name="register">Register</string>
     <string name="logo">QuickChat</string>
+    <string name="register_info">If you don\'t have an account, click the button bellow</string>
+    <string name="confirm_password">Confirm Password:</string>
 </resources>

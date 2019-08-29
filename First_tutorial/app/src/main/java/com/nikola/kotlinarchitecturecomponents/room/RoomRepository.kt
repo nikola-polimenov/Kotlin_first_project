@@ -1,9 +1,8 @@
 package com.nikola.kotlinarchitecturecomponents.room
 
 import android.app.Application
-import androidx.lifecycle.LiveData
 
-class UserRepository(application: Application) {
+class RoomRepository(application: Application) {
     private val userDao: UserDAO?
 
     init {
@@ -24,11 +23,11 @@ class UserRepository(application: Application) {
 
     }
 
-    suspend fun findUserByName(username:String): LiveData<List<UserEntity>>? {
+    suspend fun findUserByName(username:String): List<UserEntity>? {
         return userDao?.findByUsername(username)
     }
 
-    suspend fun getAllUsers(): LiveData<List<UserEntity>>? {
+    suspend fun getAllUsers(): List<UserEntity>? {
         return userDao?.getAllUsers()
     }
 
