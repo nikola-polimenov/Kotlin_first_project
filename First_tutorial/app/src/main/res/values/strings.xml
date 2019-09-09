@@ -11,4 +11,10 @@
     <string name="remember_my_username">Remember my username</string>
     <string name="keep_me_logged">Keep me logged</string>
     <string name="title_activity_main">MainActivity</string>
+    <string name="set_status">Set status:</string>
+    <string name="submit_changes">Submit changes</string>
+    <string name="nickname">nickname</string>
+    <string name="picture">picture</string>
+    <string name="my_profile">My Profile</string>
+    <string name="logout">Logout</string>
 </resources>

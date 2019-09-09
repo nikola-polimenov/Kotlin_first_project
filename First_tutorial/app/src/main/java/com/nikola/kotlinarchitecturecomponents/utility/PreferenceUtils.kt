@@ -27,7 +27,7 @@ class PreferenceUtils(context: Context?) {
 
     fun getRememberedPassword(): String? = preference?.getString(KEY_PASSWORD, null)
 
-    fun setLooged (key:Int) {
+    fun setLogged (key:Int) {
         val editor = preference?.edit()
         editor?.putInt(KEY_LOGGED, key)
         editor?.apply()

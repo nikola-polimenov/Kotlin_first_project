@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto" android:id="@+id/navigation_main"
+        app:startDestination="@id/contactsFragment">
+
+    <fragment
+            android:id="@+id/contactsFragment"
+            android:name="com.nikola.kotlinarchitecturecomponents.ui.main.fragments.contacts.ContactsFragment"
+            android:label="ContactsFragment" />
+    <fragment
+            android:id="@+id/profileFragment"
+            android:name="com.nikola.kotlinarchitecturecomponents.ui.main.fragments.profile.ProfileFragment"
+            android:label="ProfileFragment" />
+    <action
+            android:id="@+id/action_global_profileFragment"
+            app:destination="@id/profileFragment"
+            app:launchSingleTop="true" />
+</navigation>

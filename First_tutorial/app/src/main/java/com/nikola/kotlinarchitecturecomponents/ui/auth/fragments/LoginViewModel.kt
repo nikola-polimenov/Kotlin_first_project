@@ -24,7 +24,7 @@ class LoginViewModel (application: Application): AndroidViewModel(application) {
                 val result = networkRepository.getUsers(username, password)
                 if (result.isSuccessful && !result.body().isNullOrEmpty()) {
                     foundUser.value = result.body()?.get(0)
-                    Toast.makeText(context, "Login Successful, ${foundUser.value?.username}", Toast.LENGTH_SHORT).show()
+                    //Toast.makeText(context, "Login Successful, ${foundUser.value?.username}", Toast.LENGTH_SHORT).show()
                 }else {
                     foundUser.value = null
                     Toast.makeText(context, "Invalid details.", Toast.LENGTH_LONG).show()

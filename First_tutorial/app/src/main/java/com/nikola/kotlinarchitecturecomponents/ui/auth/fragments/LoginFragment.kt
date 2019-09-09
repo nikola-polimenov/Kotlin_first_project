@@ -35,21 +35,25 @@ class LoginFragment : Fragment() {
         }
 
         login.setOnClickListener {
-            loginViewModel.getUsers(input_username.text.toString(), input_password.text.toString())
-            loginViewModel.foundUser.observe(this, Observer {
-                if (input_username.text.toString() == loginViewModel.foundUser.value?.username
-                    && input_password.text.toString() == loginViewModel.foundUser.value?.password) {
-
-                    if (rememberDetailsChoice.isChecked) { preferences.setRememberedUsername(input_username.text.toString()) }
-                    if (keepLogged.isChecked) {
-                        preferences.setRememberedUsername(input_username.text.toString())
-                        preferences.setRememberedPassword(input_password.text.toString())
-                        preferences.setLooged(1)
-                    }
-
-                    startActivity(Intent(context, MainActivity::class.java))
-                }
-            })
+            authenticateUser()
         }
+    }
+
+    private fun authenticateUser() {
+        loginViewModel.getUsers(input_username.text.toString(), input_password.text.toString())
+        loginViewModel.foundUser.observe(this, Observer {
+            if (input_username.text.toString() == loginViewModel.foundUser.value?.username
+                && input_password.text.toString() == loginViewModel.foundUser.value?.password) {
+
+                preferences.setRememberedUsername(input_username.text.toString())
+                if (keepLogged.isChecked) {
+                    preferences.setRememberedUsername(input_username.text.toString())
+                    preferences.setRememberedPassword(input_password.text.toString())
+                    preferences.setLogged(1)
+                }
+
+                startActivity(Intent(context, MainActivity::class.java))
+            }
+        })
     }
 }

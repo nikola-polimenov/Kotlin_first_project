@@ -10,9 +10,13 @@ import com.nikola.kotlinarchitecturecomponents.R
 import kotlinx.android.synthetic.main.fragment_register.*
 
 class RegisterFragment : Fragment() {
-lateinit var registerViewModel: RegisterViewModel
+    lateinit var registerViewModel: RegisterViewModel
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         registerViewModel = ViewModelProviders.of(this).get(RegisterViewModel::class.java)
         return inflater.inflate(R.layout.fragment_register, container, false)
     }
@@ -23,9 +27,17 @@ lateinit var registerViewModel: RegisterViewModel
         register.setOnClickListener {
             if (input_username.text.isNotEmpty()
                 && input_password.text.isNotEmpty()
-                && input_password.text.toString() == input_confirm_password.text.toString()) {
+                && input_nickname.text.isNotEmpty()
+                && input_picture.text.isNotEmpty()
+                && input_password.text.toString() == input_confirm_password.text.toString()
+            ) {
 
-                registerViewModel.createUser(input_username.text.toString(), input_password.text.toString())
+                registerViewModel.createUser(
+                    input_username.text.toString(),
+                    input_password.text.toString(),
+                    input_picture.text.toString(),
+                    input_nickname.text.toString()
+                )
 
             }
         }
