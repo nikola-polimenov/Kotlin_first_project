@@ -3,9 +3,11 @@ package com.nikola.kotlinarchitecturecomponents.ui.main.fragments.addcontact
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -29,6 +31,7 @@ class AddContactFragment : Fragment() {
     ): View? {
         preferences = PreferenceUtils(context)
         addContactViewModel = ViewModelProviders.of(this).get(AddContactViewModel::class.java)
+        addContactViewModel.getMyProfile(preferences.getRememberedUsername())
         return inflater.inflate(R.layout.fragment_addcontact, container, false)
     }
 
@@ -57,6 +60,25 @@ class AddContactFragment : Fragment() {
         })
     }
 
+    private fun onContactClicked(contactModel: ContactModel) {
+        if (preferences.getRememberedUsername() != contactModel.username) {
+            var contactCollisionChecker = 0
+            addContactViewModel.myProfile.contacts?.forEach {
+                if (it == contactModel.username) {
+                    contactCollisionChecker++
+                    Toast.makeText(context, "${contactModel.nickname} is already in your Contact list.", Toast.LENGTH_SHORT).show()
+                }
+            }
+            if (contactCollisionChecker == 0) {
+                addContactViewModel.addContact(addContactViewModel.myProfile.id, addContactViewModel.myProfile.contacts)
+                Toast.makeText(context, "${contactModel.nickname} has been added to your Contact list.", Toast.LENGTH_SHORT).show()
+            }
+        }
+
+        addContactViewModel.myProfile.contacts?.add(contactModel.username)
+        Log.e("Testing my profile:", "${addContactViewModel.myProfile.contacts}")
+    }
+
     private fun addDataSet() {
         val data = addContactViewModel.listOfContacts.value!!
         contactsAdapter.submitList(data)
@@ -67,7 +89,7 @@ class AddContactFragment : Fragment() {
             layoutManager = LinearLayoutManager(context)
             val topSpacingDecoration = TopSpacingItemDecoration(20)
             addItemDecoration(topSpacingDecoration)
-            contactsAdapter = ContactsAdapter()
+            contactsAdapter = ContactsAdapter { contactModel: ContactModel -> onContactClicked(contactModel) }
             adapter = contactsAdapter
         }
     }

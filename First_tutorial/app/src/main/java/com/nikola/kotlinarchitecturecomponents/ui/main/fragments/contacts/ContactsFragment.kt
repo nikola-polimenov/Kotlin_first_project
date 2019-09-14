@@ -6,6 +6,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 
 import androidx.lifecycle.Observer
@@ -62,9 +63,13 @@ class ContactsFragment : Fragment() {
             layoutManager = LinearLayoutManager(context)
             val topSpacingDecoration = TopSpacingItemDecoration(20)
             addItemDecoration(topSpacingDecoration)
-            contactsAdapter = ContactsAdapter()
+            contactsAdapter = ContactsAdapter { contactModel: ContactModel -> onContactClicked(contactModel) }
             adapter = contactsAdapter
         }
+    }
+
+    private fun onContactClicked(contactModel: ContactModel) {
+        Toast.makeText(context, "${contactModel.username} has been clicked!", Toast.LENGTH_SHORT).show()
     }
 
 }

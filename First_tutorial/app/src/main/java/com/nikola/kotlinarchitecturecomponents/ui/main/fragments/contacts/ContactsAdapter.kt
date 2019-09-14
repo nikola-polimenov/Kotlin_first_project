@@ -10,7 +10,7 @@ import com.bumptech.glide.Glide
 import com.nikola.kotlinarchitecturecomponents.R
 import kotlinx.android.synthetic.main.layout_contact_list_item.view.*
 
-class ContactsAdapter:RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class ContactsAdapter (val clickListener:(ContactModel) -> Unit):RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private var items: List<ContactModel> = ArrayList()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
@@ -30,7 +30,7 @@ class ContactsAdapter:RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (holder) {
             is ContactViewHolder -> {
-                holder.bind(items[position])
+                holder.bind(items[position], clickListener)
             }
         }
     }
@@ -45,13 +45,14 @@ class ContactsAdapter:RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         private val contactStatus:ImageView? = itemView.contact_status
         private val contactPicture:ImageView = itemView.contact_picture
 
-        fun bind(contactModel: ContactModel){
+        fun bind(contactModel: ContactModel, clickListener: (ContactModel) -> Unit){
             contactNickname?.text = contactModel.nickname
             if (contactModel.status == 1) {
                 contactStatus?.setImageResource(R.drawable.status_online)
             } else {
                 contactStatus?.setImageResource(R.drawable.status_offline)
             }
+            itemView.setOnClickListener {clickListener(contactModel)}
 
             Glide.with(itemView.context).load(contactModel.picture).into(contactPicture)
         }

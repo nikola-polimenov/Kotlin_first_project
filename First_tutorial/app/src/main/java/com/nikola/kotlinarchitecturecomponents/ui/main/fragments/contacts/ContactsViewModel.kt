@@ -35,9 +35,8 @@ class ContactsViewModel(application: Application) : AndroidViewModel(application
 
     private suspend fun getListOfContactsPhaseOne(myProfile: Profile?) {
         var counter = 0
-        if (list.size == myProfile?.contacts?.size) {
-            list.clear()
-        }
+        list.clear()
+
         myProfile?.contacts?.forEach {
             getListOfContactsPhaseTwo(withContext(IO) {
                 networkRepository.getProfiles(it).body()?.get(0)
@@ -52,7 +51,7 @@ class ContactsViewModel(application: Application) : AndroidViewModel(application
     }
 
     private fun getListOfContactsPhaseTwo(contact: Profile?) {
-        val foundContact = ContactModel(contact?.nickname, contact?.picture, contact?.status)
+        val foundContact = ContactModel(contact?.nickname, contact?.picture, contact?.status, contact?.username)
         list.add(foundContact)
 
     }

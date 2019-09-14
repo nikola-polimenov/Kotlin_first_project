@@ -35,6 +35,6 @@ class NetworkRepository {
     ): Response<Profile> =
         ProfileApi.retrofitService.editProfile(id, picture, nickname, status)
 
-    suspend fun addContact(id: Int?, contacts: ArrayList<String?>): Response<Profile> =
+    suspend fun addContact(id: Int?, contacts: ArrayList<String?>?): Response<Profile> =
         ProfileApi.retrofitService.addContact(id, contacts)
 }

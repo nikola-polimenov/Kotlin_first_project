@@ -39,7 +39,7 @@ interface ProfileApiService {
     @FormUrlEncoded
     @PATCH("profiles/{id}")
     suspend fun addContact(@Path("id") id: Int?,
-                           @Field("contacts") contacts: ArrayList<String?>): Response<Profile>
+                           @Field("contacts") contacts: ArrayList<String?>?): Response<Profile>
 
 }
 
