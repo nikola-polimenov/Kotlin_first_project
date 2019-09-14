@@ -15,6 +15,9 @@ class NetworkRepository {
     suspend fun getProfiles(username: String?): Response<List<Profile>> =
         ProfileApi.retrofitService.getProfiles(username)
 
+    suspend fun getProfilesByNickname(nickname: String?): Response<List<Profile>> =
+        ProfileApi.retrofitService.getProfilesByNickname(nickname)
+
     suspend fun createProfile(
         username: String?,
         picture: String?,

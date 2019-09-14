@@ -18,6 +18,8 @@ interface ProfileApiService {
     @GET("profiles")
     suspend fun getProfiles(@Query("username") username: String?): Response<List<Profile>>
 
+    @GET("profiles")
+    suspend fun getProfilesByNickname(@Query("nickname") nickname: String?): Response<List<Profile>>
 
     @FormUrlEncoded
     @POST("profiles")
@@ -38,6 +40,7 @@ interface ProfileApiService {
     @PATCH("profiles/{id}")
     suspend fun addContact(@Path("id") id: Int?,
                            @Field("contacts") contacts: ArrayList<String?>): Response<Profile>
+
 }
 
 object ProfileApi {

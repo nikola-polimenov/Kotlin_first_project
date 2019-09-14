@@ -6,7 +6,11 @@
     <fragment
             android:id="@+id/contactsFragment"
             android:name="com.nikola.kotlinarchitecturecomponents.ui.main.fragments.contacts.ContactsFragment"
-            android:label="ContactsFragment" />
+            android:label="ContactsFragment" >
+        <action
+                android:id="@+id/action_contactsFragment_to_addContactFragment"
+                app:destination="@id/addContactFragment" />
+    </fragment>
     <fragment
             android:id="@+id/profileFragment"
             android:name="com.nikola.kotlinarchitecturecomponents.ui.main.fragments.profile.ProfileFragment"
@@ -15,4 +19,8 @@
             android:id="@+id/action_global_profileFragment"
             app:destination="@id/profileFragment"
             app:launchSingleTop="true" />
+    <fragment
+            android:id="@+id/addContactFragment"
+            android:name="com.nikola.kotlinarchitecturecomponents.ui.main.fragments.addcontact.AddContactFragment"
+            android:label="AddContactFragment" />
 </navigation>

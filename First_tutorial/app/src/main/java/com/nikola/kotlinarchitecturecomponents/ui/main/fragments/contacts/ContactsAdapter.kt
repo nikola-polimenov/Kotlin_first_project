@@ -37,7 +37,6 @@ class ContactsAdapter:RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     fun submitList(contactList: List<ContactModel>) {
         items = contactList
-        //Log.i("ListOfContacts (In the RecyclerViewAdapter)", "${items.get(0).nickname}")
     }
 
     class ContactViewHolder constructor(itemView: View): RecyclerView.ViewHolder(itemView){
