@@ -24,7 +24,6 @@ class ContactsViewModel(application: Application) : AndroidViewModel(application
         get() = job + Main
 
     fun getListOfContacts(username: String?) {
-        listOfContacts.value = ArrayList()
             launch(coroutineContext) {
                 getListOfContactsPhaseOne(withContext(IO) {
                     networkRepository.getProfiles(username).body()?.get(0)
@@ -45,7 +44,7 @@ class ContactsViewModel(application: Application) : AndroidViewModel(application
         }
         when (counter){
             myProfile?.contacts?.size -> {
-                listOfContacts.value = list
+                listOfContacts.value = list // I want to put this in an if block to check if the list is unchanged. But it causes some unexpected errors.
             }
         }
     }

@@ -13,6 +13,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.nikola.kotlinarchitecturecomponents.R
+import com.nikola.kotlinarchitecturecomponents.network.models.ProfileContacts
 import com.nikola.kotlinarchitecturecomponents.ui.main.fragments.contacts.ContactModel
 import com.nikola.kotlinarchitecturecomponents.ui.main.fragments.contacts.ContactsAdapter
 import com.nikola.kotlinarchitecturecomponents.ui.main.fragments.contacts.TopSpacingItemDecoration
@@ -70,13 +71,14 @@ class AddContactFragment : Fragment() {
                 }
             }
             if (contactCollisionChecker == 0) {
-                addContactViewModel.addContact(addContactViewModel.myProfile.id, addContactViewModel.myProfile.contacts)
+                val contacts = ProfileContacts(addContactViewModel.myProfile.contacts)
+                addContactViewModel.addContact(addContactViewModel.myProfile.id, contacts)
                 Toast.makeText(context, "${contactModel.nickname} has been added to your Contact list.", Toast.LENGTH_SHORT).show()
             }
         }
 
         addContactViewModel.myProfile.contacts?.add(contactModel.username)
-        Log.e("Testing my profile:", "${addContactViewModel.myProfile.contacts}")
+        Log.i("Testing my profile:", "${addContactViewModel.myProfile.contacts}")
     }
 
     private fun addDataSet() {

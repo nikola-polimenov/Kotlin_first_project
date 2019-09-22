@@ -10,6 +10,9 @@
         <action
                 android:id="@+id/action_contactsFragment_to_addContactFragment"
                 app:destination="@id/addContactFragment" />
+        <action
+                android:id="@+id/action_contactsFragment_to_chatRoomFragment"
+                app:destination="@id/chatRoomFragment" />
     </fragment>
     <fragment
             android:id="@+id/profileFragment"
@@ -23,4 +26,13 @@
             android:id="@+id/addContactFragment"
             android:name="com.nikola.kotlinarchitecturecomponents.ui.main.fragments.addcontact.AddContactFragment"
             android:label="AddContactFragment" />
+    <fragment
+            android:id="@+id/chatRoomFragment"
+            android:name="com.nikola.kotlinarchitecturecomponents.ui.main.fragments.chatroom.ChatRoomFragment"
+            android:label="ChatRoomFragment" >
+        <argument
+                android:name="contactUsername"
+                app:argType="string"
+                app:nullable="true" />
+    </fragment>
 </navigation>

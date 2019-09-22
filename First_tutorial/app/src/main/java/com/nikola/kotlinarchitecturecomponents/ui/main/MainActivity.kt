@@ -9,6 +9,8 @@ import androidx.navigation.Navigation
 import com.nikola.kotlinarchitecturecomponents.R
 import com.nikola.kotlinarchitecturecomponents.ui.auth.AuthenticationActivity
 import kotlinx.android.synthetic.main.activity_main.*
+import java.sql.Time
+import java.util.*
 
 
 class MainActivity : AppCompatActivity() {
@@ -19,7 +21,6 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
         title = "Contacts"
-
 
     }
 

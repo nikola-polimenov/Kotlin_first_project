@@ -6,6 +6,7 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import com.nikola.kotlinarchitecturecomponents.network.NetworkRepository
 import com.nikola.kotlinarchitecturecomponents.network.models.Profile
+import com.nikola.kotlinarchitecturecomponents.network.models.ProfileContacts
 import com.nikola.kotlinarchitecturecomponents.ui.main.fragments.contacts.ContactModel
 import kotlinx.coroutines.*
 import kotlinx.coroutines.Dispatchers.IO
@@ -27,72 +28,77 @@ class AddContactViewModel(application: Application) : AndroidViewModel(applicati
     fun getListOfContacts(usernameOrNickname: String?) {
         list.clear()
         listOfContacts.value = ArrayList()
-        launch(coroutineContext) {
-            launch(IO) {
-                try {
-                    val firstResult = networkRepository.getProfiles(usernameOrNickname)
-                    if (firstResult.isSuccessful && !firstResult.body().isNullOrEmpty()) {
-                        Log.e("Testing:", "${firstResult.body()?.get(0)?.username}")
-                        withContext(Main) {
-                            val foundUser = ContactModel(
-                                firstResult.body()?.get(0)?.nickname,
-                                firstResult.body()?.get(0)?.picture,
-                                firstResult.body()?.get(0)?.status,
-                                firstResult.body()?.get(0)?.username
-                            )
-                            list.add(foundUser)
-                            listOfContacts.value = list
-                        }
-                    } else {
-                        Log.e("Testing:", "Found no such user!")
+        getProfilesByUsername(usernameOrNickname)
+        getProfilesByNickname(usernameOrNickname)
+
+    }
+
+    private fun getProfilesByUsername(username: String?) {
+        CoroutineScope(IO).launch {
+            try {
+                val firstResult = networkRepository.getProfiles(username)
+                if (firstResult.isSuccessful && !firstResult.body().isNullOrEmpty()) {
+                    Log.i("Testing:", "${firstResult.body()?.get(0)?.username}")
+                    withContext(Main) {
+                        val foundUser = ContactModel(
+                            firstResult.body()?.get(0)?.nickname,
+                            firstResult.body()?.get(0)?.picture,
+                            firstResult.body()?.get(0)?.status,
+                            firstResult.body()?.get(0)?.username
+                        )
+                        list.add(foundUser)
+                        listOfContacts.value = list
                     }
-                } catch (e: Exception) {
-                    Log.e("Server error:", "${e.message}")
-
+                } else {
+                    Log.i("Testing:", "Found no such user!")
                 }
-            }
-            launch(IO) {
-                try {
-                    val secondResult = networkRepository.getProfilesByNickname(usernameOrNickname)
-                    if (secondResult.isSuccessful && !secondResult.body().isNullOrEmpty()) {
-                        Log.e("Testing:", "${secondResult.body()?.get(0)?.username}")
-                        withContext(Main) {
-                            val foundUser = ContactModel(
-                                secondResult.body()?.get(0)?.nickname,
-                                secondResult.body()?.get(0)?.picture,
-                                secondResult.body()?.get(0)?.status,
-                                secondResult.body()?.get(0)?.username
-                            )
-                            list.add(foundUser)
-                            Log.e("Testing:", "$list")
-                            listOfContacts.value = list
-                        }
-                    } else {
-                        Log.e("Testing:", "Found no such user!")
-                    }
-                } catch (e: Exception) {
-                    Log.e("Server error:", "${e.message}")
-                }
-            }
+            } catch (e: Exception) {
+                Log.i("Server error:", "${e.message}")
 
-
+            }
         }
     }
 
-    fun addContact(myId: Int?, newContactList:ArrayList<String?>?) {
-        Log.e("Testing addContact parameters:", "$myId, $newContactList")
+    private fun getProfilesByNickname(nickname: String?) {
+        CoroutineScope(IO).launch {
+            try {
+                val secondResult = networkRepository.getProfilesByNickname(nickname)
+                if (secondResult.isSuccessful && !secondResult.body().isNullOrEmpty()) {
+                    Log.i("Testing:", "${secondResult.body()?.get(0)?.username}")
+                    withContext(Main) {
+                        val foundUser = ContactModel(
+                            secondResult.body()?.get(0)?.nickname,
+                            secondResult.body()?.get(0)?.picture,
+                            secondResult.body()?.get(0)?.status,
+                            secondResult.body()?.get(0)?.username
+                        )
+                        list.add(foundUser)
+                        Log.i("Testing:", "$list")
+                        listOfContacts.value = list
+                    }
+                } else {
+                    Log.i("Testing:", "Found no such user!")
+                }
+            } catch (e: Exception) {
+                Log.i("Server error:", "${e.message}")
+            }
+        }
+    }
+
+    fun addContact(myId: Int?, newContactList: ProfileContacts) {
+        Log.i("Testing addContact parameters:", "$myId, $newContactList")
         launch(coroutineContext) {
             withContext(IO) {
                 try {
                     val result = networkRepository.addContact(myId, newContactList)
                     if (result.isSuccessful) {
-                        Log.e("Testing: AddContact functionality", "${result.body()?.contacts}")
+                        Log.i("Testing: AddContact functionality", "${result.body()?.contacts}")
                     } else {
-                        Log.e("Testing: AddContact functionality", "Something went wrong!")
+                        Log.i("Testing: AddContact functionality", "Something went wrong!")
 
                     }
                 } catch (e: Exception) {
-                    Log.e("Server error:", "${e.message}")
+                    Log.i("Server error:", "${e.message}")
                 }
             }
         }
@@ -116,15 +122,14 @@ class AddContactViewModel(application: Application) : AndroidViewModel(applicati
                             )
                         }
                     } else {
-                        Log.e("Testing", "Something went wrong!")
+                        Log.i("Testing", "Something went wrong!")
                     }
                 } catch (e: Exception) {
-                    Log.e("Server error:", "${e.message}")
+                    Log.i("Server error:", "${e.message}")
                 }
             }
         }
     }
-
 
 
 }

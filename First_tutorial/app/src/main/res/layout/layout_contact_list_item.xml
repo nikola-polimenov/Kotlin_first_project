@@ -9,7 +9,7 @@
 
 
     <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/container_item"
+            android:id="@+id/container_item_contact"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="10dp">

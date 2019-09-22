@@ -18,4 +18,6 @@
     <string name="my_profile">My Profile</string>
     <string name="logout">Logout</string>
     <string name="enter_username_or_nickname_of_the_contact">Enter username or nickname of the contact.</string>
+    <string name="enter_message">Enter message:</string>
+    <string name="send">Send</string>
 </resources>

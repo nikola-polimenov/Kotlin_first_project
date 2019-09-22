@@ -1,6 +1,7 @@
 package com.nikola.kotlinarchitecturecomponents.network
 
 import com.nikola.kotlinarchitecturecomponents.network.models.Profile
+import com.nikola.kotlinarchitecturecomponents.network.models.ProfileContacts
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -36,10 +37,8 @@ interface ProfileApiService {
                             @Field(value = "nickname") nickname: String?,
                             @Field(value = "status") status: Int?): Response<Profile>
 
-    @FormUrlEncoded
     @PATCH("profiles/{id}")
-    suspend fun addContact(@Path("id") id: Int?,
-                           @Field("contacts") contacts: ArrayList<String?>?): Response<Profile>
+    suspend fun addContact(@Path("id") id: Int?, @Body contacts: ProfileContacts): Response<Profile>
 
 }
 

@@ -10,7 +10,7 @@ import com.bumptech.glide.Glide
 import com.nikola.kotlinarchitecturecomponents.R
 import kotlinx.android.synthetic.main.layout_contact_list_item.view.*
 
-class ContactsAdapter (val clickListener:(ContactModel) -> Unit):RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class ContactsAdapter (private val clickListener:(ContactModel) -> Unit):RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private var items: List<ContactModel> = ArrayList()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {

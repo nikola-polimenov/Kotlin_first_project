@@ -7,6 +7,4 @@ class Profile(
     var contacts: ArrayList<String?>? = ArrayList(),
     var status: Int? = 1,
     val id: Int? = 0
-) {
-
-}
+)
